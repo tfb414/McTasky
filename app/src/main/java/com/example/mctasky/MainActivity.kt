@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun fetchTasks() {
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://localhost:3000/") // Your API base URL
+            .baseUrl("http://192.168.0.35:3000/") // Your API base URL
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
