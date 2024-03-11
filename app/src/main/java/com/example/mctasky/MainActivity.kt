@@ -54,17 +54,17 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-//        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 //
 ////        viewModel.tasks.observe(this) { tasks ->
 ////            val taskTextView: TextView = findViewById(R.id.taskTextView)
 ////            taskTextView.text = tasks.joinToString("\n") { it.task }
 ////        }
 //
-//        viewModel.taskTypes.observe(this) { taskTypes ->
-//            val taskTypesTextView: TextView = findViewById(R.id.taskTypesTextView)
-//            taskTypesTextView.text = taskTypes.joinToString("\n") { it?.taskName ?: "Unknown"  } ?: "hey"
-//        }
+        viewModel.taskTypes.observe(this) { taskTypes ->
+            val taskTypesTextView: TextView = findViewById(R.id.taskTypesTextView)
+            taskTypesTextView.text = taskTypes.joinToString("\n") { it?.taskName ?: "Unknown"  } ?: "hey"
+        }
 //
 //        viewModel.errorMessage.observe(this) { message ->
 //            val taskTextView: TextView = findViewById(R.id.taskTypesTextView)
