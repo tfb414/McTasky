@@ -31,7 +31,6 @@ class TaskRepository @Inject constructor(
     }
 
     fun fetchTaskTypes(onSuccess: (List<TaskTypes>) -> Unit, onError: (String) -> Unit) {
-        Log.d("derp", "trying to fix this")
         taskService.getTaskTypes().enqueue(object : Callback<List<TaskTypes>> {
             override fun onResponse(call: Call<List<TaskTypes>>, response: Response<List<TaskTypes>>) {
                 if (response.isSuccessful) {

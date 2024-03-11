@@ -55,6 +55,7 @@ class MainActivity : AppCompatActivity() {
 
 
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+
 //
 ////        viewModel.tasks.observe(this) { tasks ->
 ////            val taskTextView: TextView = findViewById(R.id.taskTextView)
@@ -265,6 +266,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        Log.d("DERP", "we in here")
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
