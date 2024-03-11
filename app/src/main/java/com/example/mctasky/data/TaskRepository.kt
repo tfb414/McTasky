@@ -35,8 +35,6 @@ class TaskRepository @Inject constructor(
         taskService.getTaskTypes().enqueue(object : Callback<List<TaskTypes>> {
             override fun onResponse(call: Call<List<TaskTypes>>, response: Response<List<TaskTypes>>) {
                 if (response.isSuccessful) {
-                    Log.d("DERPY3", "updated")
-                    Log.d("DERPY2", response.body().toString())
                     response.body()?.let(onSuccess) ?: onError("Empty TaskTypes List")
                 } else {
                     onError("Request failed with Error Code: ${response.code()}")
