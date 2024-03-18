@@ -267,6 +267,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         Log.d("DERP", "we in here")
+        super.onCreateOptionsMenu(menu);
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
