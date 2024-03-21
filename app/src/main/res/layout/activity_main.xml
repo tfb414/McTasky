@@ -8,8 +8,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="16dp"
-        android:background="@drawable/input_box_border">
+        android:padding="16dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -20,38 +19,74 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="20dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Manually Track Task"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp" />
-
-        <AutoCompleteTextView
-            android:id="@+id/task_type_dropdown"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Select Task Type" />
+            android:gravity="center"
+            android:orientation="vertical"
+            android:background="@drawable/input_box_border">
 
-        <EditText
-            android:id="@+id/amount_input"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Track Task"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <AutoCompleteTextView
+                android:id="@+id/task_type_dropdown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Select Task Type" />
+
+            <EditText
+                android:id="@+id/amount_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Amount"
+                android:inputType="numberDecimal" />
+
+            <EditText
+                android:id="@+id/unit_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Unit" />
+
+            <Button
+                android:id="@+id/track_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Track" />
+
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Amount"
-            android:inputType="numberDecimal" />
+            android:gravity="center"
+            android:orientation="vertical"
+            android:background="@drawable/input_box_border"
+            android:layout_marginTop="16dp">
 
-        <EditText
-            android:id="@+id/unit_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Unit" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Create Task Type"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
 
-        <Button
-            android:id="@+id/track_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Track" />
+            <EditText
+                android:id="@+id/task_type_name_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Task Type Name" />
 
+            <Button
+                android:id="@+id/create_task_type_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Create Task Type" />
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

@@ -12,7 +12,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-    private const val BASE_URL = "http://192.168.0.26:3333/" // Your API base URL
+    private const val BASE_URL = "http://192.168.0.81:3333/" // Your API base URL
 
     val retrofit: Retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
