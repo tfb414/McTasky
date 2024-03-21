@@ -15,8 +15,12 @@ fun createTaskFromInput(task: String, amount: Number, unit: String): Task {
     return Task(task = task, person = "Tim", amount =amount, unit =unit)
 }
 
-data class TaskTypes(
-    val id: String,
+fun createTaskTypeBody(taskType: String, description: String? = null): TaskType {
+    return TaskType(taskName = taskType, description = description)
+}
+
+
+data class TaskType(
     val taskName: String,
-    val description: String,
+    val description: String?
 )

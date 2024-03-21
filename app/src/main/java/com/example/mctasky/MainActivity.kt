@@ -12,13 +12,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
-import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -68,12 +66,12 @@ class MainActivity : AppCompatActivity() {
         val adapter = ArrayAdapter(
             this,
             android.R.layout.simple_dropdown_item_1line,
-            viewModel.taskTypes.value?.map { it.taskName } ?: arrayListOf() // Populate with initial data
+            viewModel.taskType.value?.map { it.taskName } ?: arrayListOf() // Populate with initial data
         )
         taskTypeDropdown.setAdapter(adapter)
         taskTypeDropdown.threshold = 0
 
-        viewModel.taskTypes.observe(this) { taskTypes ->
+        viewModel.taskType.observe(this) { taskTypes ->
             try {
                 if (taskTypes != null && adapter != null) {
                     adapter.clear()
@@ -96,6 +94,34 @@ class MainActivity : AppCompatActivity() {
             taskTypeDropdown.showDropDown()
         }
 
+        val createTaskTypeButton = findViewById<Button>(R.id.create_task_type_button)
+        createTaskTypeButton.setOnClickListener {
+            handleCreateTaskTypeButtonClick(taskTypeDropdown)
+        }
+
+    }
+
+    private fun handleCreateTaskTypeButtonClick(taskTypeDropdown: AutoCompleteTextView) {
+        val taskTypeNameInput = findViewById<EditText>(R.id.task_type_name_input)
+        val taskTypeName = taskTypeNameInput.text.toString()
+        // TODO: Implement validation to check if taskTypeName is empty
+
+        val taskTypePayload = createTaskTypeBody(taskTypeName)
+
+        viewModel.postTaskType(taskTypePayload,
+            onSuccess = { createdTaskType ->q
+                val adapter = taskTypeDropdown.adapter as ArrayAdapter<String>
+                adapter.add(createdTaskType.taskName)
+                adapter.notifyDataSetChanged()
+
+                // TODO: Handle successful post (display Toast, etc.)
+                Log.d("Task Creation", "Task created successfully")
+            },
+            onError = { errorMessage ->
+                // TODO: Handle error (display Toast, etc.)
+                Log.e("Task Creation", "Error creating task: $errorMessage")
+            }
+        )
     }
 
     private fun handleTrackButtonClick() {
