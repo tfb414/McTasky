@@ -13,7 +13,12 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import android.widget.Button
+import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -40,9 +45,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        tagList = findViewById<View>(R.id.list) as LinearLayout
+//        tagList = findViewById<View>(R.id.list) as LinearLayout
         resolveIntent(intent)
         nfcAdapter = NfcAdapter.getDefaultAdapter(this)
+        // comment out for dev
         if (nfcAdapter == null) {
             showNoNfcDialog()
             return
@@ -56,18 +62,66 @@ class MainActivity : AppCompatActivity() {
 ////            val taskTextView: TextView = findViewById(R.id.taskTextView)
 ////            taskTextView.text = tasks.joinToString("\n") { it.task }
 ////        }
-//
+
+        val taskTypeDropdown = findViewById<AutoCompleteTextView>(R.id.task_type_dropdown)
+
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_dropdown_item_1line,
+            viewModel.taskTypes.value?.map { it.taskName } ?: arrayListOf() // Populate with initial data
+        )
+        taskTypeDropdown.setAdapter(adapter)
+        taskTypeDropdown.threshold = 0
+
         viewModel.taskTypes.observe(this) { taskTypes ->
-            val taskTypesTextView: TextView = findViewById(R.id.taskTypesTextView)
-            taskTypesTextView.text = taskTypes.joinToString("\n") { it?.taskName ?: "Unknown"  } ?: "hey"
+            try {
+                if (taskTypes != null && adapter != null) {
+                    adapter.clear()
+                    adapter.addAll(taskTypes.map { it.taskName }.toMutableList())
+                    adapter.notifyDataSetChanged()
+                } else {
+                    Log.e("TaskAdapter", "Error: taskTypes or adapter is null")
+                }
+            } catch (e: Exception) {
+                Log.e("TaskAdapter", "Error updating adapter: ${e.message}")
+            }
         }
-//
-//        viewModel.errorMessage.observe(this) { message ->
-//            val taskTextView: TextView = findViewById(R.id.taskTypesTextView)
-//            taskTextView.text = message
-//        }
+
+        val trackButton = findViewById<Button>(R.id.track_button)
+        trackButton.setOnClickListener {
+            handleTrackButtonClick()
+        }
+
+        taskTypeDropdown.setOnClickListener {
+            taskTypeDropdown.showDropDown()
+        }
 
     }
+
+    private fun handleTrackButtonClick() {
+        val taskTypeDropdown = findViewById<AutoCompleteTextView>(R.id.task_type_dropdown)
+        val amountInput = findViewById<EditText>(R.id.amount_input)
+        val unitInput = findViewById<EditText>(R.id.unit_input)
+
+        val selectedTaskType = taskTypeDropdown.text.toString() // Get text directly
+        val amount = amountInput.text.toString().toFloatOrNull() ?: 1
+        val unit = unitInput.text.toString()
+
+        val task = createTaskFromInput(selectedTaskType, amount, unit)
+
+        viewModel.postTask(task,
+            onSuccess = { createdTask ->
+                // TODO: Handle successful post (display Toast, etc.)
+                Log.d("Task Creation", "Task created successfully")
+            },
+            onError = { errorMessage ->
+                // TODO: Handle error (display Toast, etc.)
+                Log.e("Task Creation", "Error creating task: $errorMessage")
+            }
+        )
+    }
+
+
     override fun onResume() {
         super.onResume()
         if (nfcAdapter?.isEnabled == false) {
@@ -141,9 +195,11 @@ class MainActivity : AppCompatActivity() {
                     if (task.toString().isNotEmpty()) {
                         viewModel.postTask(task,
                             onSuccess = { createdTask -> // Handle successful post here
+                                // TODO pop a toast or something
                                 Log.d("Task Creation", "Task created successfully")
                             },
                             onError = { errorMessage -> // Handle error here
+                                // TODO pop a toast or something
                                 Log.e("Task Creation", "Error creating task: $errorMessage")
                             }
                         )
@@ -212,12 +268,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun clearTags() {
-        for (i in tagList!!.childCount - 1 downTo 0) {
-            val view = tagList!!.getChildAt(i)
-            if (view.id != R.id.tag_viewer_text) {
-                tagList!!.removeViewAt(i)
-            }
-        }
+//        for (i in tagList!!.childCount - 1 downTo 0) {
+//            val view = tagList!!.getChildAt(i)
+//            if (view.id != R.id.tag_viewer_text) {
+//                tagList!!.removeViewAt(i)
+//            }
+//        }
     }
 
     companion object {

@@ -2,35 +2,38 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<LinearLayout
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:gravity="center"
-android:orientation="vertical"
-android:id="@+id/list">
 
-<Button
-    android:id="@+id/getTasks"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Click Me!" />
-
-<TextView
-    android:id="@+id/taskTypesTextView"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="It's ya boy timmy" />
-<TextView
-        android:id="@+id/tag_viewer_text"
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
-        android:autoLink="email|web"
-        android:text="@string/intro_message" />
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-</LinearLayout>
+        <AutoCompleteTextView
+            android:id="@+id/task_type_dropdown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Select Task Type" />
+
+        <EditText
+            android:id="@+id/amount_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Amount"
+            android:inputType="numberDecimal" />
+
+        <EditText
+            android:id="@+id/unit_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Unit" />
+
+        <Button
+            android:id="@+id/track_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Track" />
+
+    </LinearLayout>
 </ScrollView>
-
-
-
