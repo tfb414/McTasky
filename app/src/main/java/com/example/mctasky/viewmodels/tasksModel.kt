@@ -38,4 +38,8 @@ class MainViewModel @Inject constructor(private val taskRepository: TaskReposito
             onError = { _errorMessage.value = it }
         )
     }
+
+    fun postTask(task: Task, onSuccess: (Task) -> Unit, onError: (String) -> Unit) {
+        taskRepository.postTask(task, onSuccess, onError)
+    }
 }
