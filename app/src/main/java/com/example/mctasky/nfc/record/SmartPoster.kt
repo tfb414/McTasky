@@ -20,6 +20,9 @@ class SmartPoster private constructor(
     private val title: TextRecord?
 ) : ParsedNdefRecord {
 
+//    override val text: String?
+//        get() = title?.text ?: uri.text
+
     override fun getView(
         activity: Activity,
         inflater: LayoutInflater,

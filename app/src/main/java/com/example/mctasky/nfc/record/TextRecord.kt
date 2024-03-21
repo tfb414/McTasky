@@ -30,6 +30,10 @@ class TextRecord private constructor(private val text: String) : ParsedNdefRecor
         return view
     }
 
+    fun getText(): String {  // Add a public getter
+        return text
+    }
+
     companion object {
         // TODO: deal with text fields which span multiple NdefRecords
         fun parse(record: NdefRecord): TextRecord {

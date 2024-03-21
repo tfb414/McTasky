@@ -45,4 +45,21 @@ class TaskRepository @Inject constructor(
             }
         })
     }
+
+
+    fun postTask(task: Task, onSuccess: (Task) -> Unit, onError: (String) -> Unit) { // Adjust the onSuccess return type if needed
+        taskService.postTask(task).enqueue(object : Callback<Task> { // Or your relevant API response type
+            override fun onResponse(call: Call<Task>, response: Response<Task>) {
+                if (response.isSuccessful) {
+                    response.body()?.let(onSuccess) ?: onError("Task creation successful, but no data")
+                } else {
+                    onError("Request failed with Error Code: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<Task>, t: Throwable) {
+                onError("Network Error: ${t.message}")
+            }
+        })
+    }
 }
