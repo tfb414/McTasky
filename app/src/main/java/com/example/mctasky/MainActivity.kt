@@ -109,7 +109,7 @@ class MainActivity : AppCompatActivity() {
         val taskTypePayload = createTaskTypeBody(taskTypeName)
 
         viewModel.postTaskType(taskTypePayload,
-            onSuccess = { createdTaskType ->q
+            onSuccess = { createdTaskType ->
                 val adapter = taskTypeDropdown.adapter as ArrayAdapter<String>
                 adapter.add(createdTaskType.taskName)
                 adapter.notifyDataSetChanged()
